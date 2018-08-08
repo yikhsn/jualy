@@ -17,14 +17,7 @@
 
     require_once 'view/header.php';    
 
-    $ambil_id_pembeli = ambil_id_pembeli();
-    $data_id_pembeli = mysqli_fetch_assoc($ambil_id_pembeli);
-    $edit_id_pembeli = $data_id_pembeli['maxId'];
-
-    $noUrut = (int) substr($edit_id_pembeli, 3, 7);
-    $noUrut++;
-    $char = "PLG";
-    $edit_id_pembeli = $char . sprintf("%07s", $noUrut);
+    $next_id = set_kode_baru('PLG', 'id_pembeli', 'pembeli');
 ?>
 <br>
 

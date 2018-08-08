@@ -16,51 +16,25 @@
         return ambil($query); 
     }
 
-    function ambil_kode_barang(){
-        $query = "SELECT max(kode_barang) AS maxKode from barang";
-        
-        return ambil($query);
-    }
-
-    function ambil_kode_suplai(){
-        $query = "SELECT max(kode_suplai) AS maxKode from suplai";
+    function ambil_max_kode($column, $table){
+        $query = "SELECT max($column) as maxKode FROM $table";
 
         return ambil($query);
     }
 
-    function ambil_id_pemasok(){
-        $query = "SELECT max(id_pemasok) AS maxId from pemasok";
-        
-        return ambil($query);
-    }
+    function set_kode_baru($key, $column, $table){
+        $get_code = mysqli_fetch_assoc(ambil_max_kode($column, $table));
+        $latest_code = $get_code['maxKode'];
 
-    function ambil_id_pembeli(){
-        $query = "SELECT max(id_pembeli) AS maxId from pembeli";
-        
-        return ambil($query);
-    }
+        $noUrut = (int) substr($latest_code, 3, 3);
+        $noUrut++;
 
-    function ambil_kode_transaksi(){
-        $query = "SELECT max(kode_transaksi) AS maxKode from penjualan";
-        
-        return ambil($query);
+        return $key . sprintf("%03s", $noUrut);
     }
     
-    function ambil_kode_transaksi_terbaru(){
-        $query = "SELECT max(kode_transaksi) AS maxKode from penjualan";
-        
-        return ambil($query);
-    }
-
     function ambil_nama_pegawai($kode_username){
         $query = "SELECT nama_pegawai FROM pegawai WHERE id_pegawai='$kode_username'";
 
-        return ambil($query);
-    }
-
-    function ambil_id_pegawai(){
-        $query = "SELECT max(id_pegawai) AS maxId from pegawai";
-        
         return ambil($query);
     }
 
@@ -124,8 +98,6 @@
         $query = "SELECT DISTINCT(jenis_brg) AS jenis_brg FROM barang";
         return ambil($query);
     }
-
-    
 
     function pilih_pelanggan(){
         $query = "SELECT id_pembeli FROM pembeli";

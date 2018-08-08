@@ -48,23 +48,9 @@
 </div>
 
 <?php
-    $ambil_id_pembeli = ambil_kode_transaksi();
-    $data_id_pembeli = mysqli_fetch_assoc($ambil_id_pembeli);
-    $edit_id_pembeli = $data_id_pembeli['maxKode'];
+    $next_id = set_kode_baru('PBL', 'kode_transaksi', 'penjualan');
 
-    $noUrut = (int) substr($edit_id_pembeli, 3, 7);
-    $noUrut++;
-    $char = "PBL";
-    $edit_id_pembeli = $char . sprintf("%07s", $noUrut);
-
-    $ambil_kode_transaksi = ambil_kode_transaksi();
-    $data_kode_transaksi = mysqli_fetch_assoc($ambil_kode_transaksi);
-    $edit_kode_transaksi = $data_kode_transaksi['maxKode'];
-
-    $noUrut = (int) substr($edit_kode_transaksi, 3, 7);
-    $noUrut++;
-    $char = "TRS";
-    $edit_kode_transaksi = $char . sprintf("%07s", $noUrut);
+    $next_code = set_kode_baru('TRS', 'kode_transaksi', 'penjualan');;
 
     $halaman = 10;
     $page = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
@@ -224,7 +210,7 @@
                     </div>
                     <div id="id_pembeli_form" class="form-group">
                         <label class="col-form-label" for="idPembeli">ID Pembeli</label>
-                        <input class="form-control" value="<?= $edit_id_pembeli; ?>" name="id_pembeli" type="text" id="idPembeli" readonly>
+                        <input class="form-control" value="<?= $next_id; ?>" name="id_pembeli" type="text" id="idPembeli" readonly>
                     </div>
                     <div class="form-group">
                         <input type="checkbox">
@@ -236,7 +222,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="kodeTransaksi">Kode Transaksi</label>
-                        <input class="form-control" name="kode_transaksi" type="text" id="kodeTransaksi" readonly value="<?= $edit_kode_transaksi;?>">
+                        <input class="form-control" name="kode_transaksi" type="text" id="kodeTransaksi" readonly value="<?= $next_code;?>">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="waktu">Waktu</label>

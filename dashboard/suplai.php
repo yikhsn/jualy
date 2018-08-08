@@ -48,14 +48,7 @@
 </div>
 
 <?php
-    $ambil_kode_suplai = ambil_kode_suplai();
-    $data_kode_suplai = mysqli_fetch_assoc($ambil_kode_suplai);
-    $edit_kode_suplai = $data_kode_suplai['maxKode'];
-
-    $noUrut = (int) substr($edit_kode_suplai, 3, 5);
-    $noUrut++;
-    $char = "SPL";
-    $edit_kode_suplai = $char . sprintf("%05s", $noUrut);
+    $next_kode = set_kode_baru('SPL', 'kode_suplai', 'suplai');
 
     $halaman = 10;
     $page = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
@@ -237,7 +230,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="kodeSuplai">Kode Suplai</label>
-                        <input class="form-control" value="<?= $edit_kode_suplai; ?>" readonly name="kode_suplai" type="text" id="kodeSuplai">
+                        <input class="form-control" value="<?= $next_kode; ?>" readonly name="kode_suplai" type="text" id="kodeSuplai">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="waktu">Waktu</label>

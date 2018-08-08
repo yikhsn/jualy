@@ -41,15 +41,7 @@
 </div>
 
 <?php
-    $ambil_id_pemasok = ambil_id_pemasok();
-    $data_id_pemasok = mysqli_fetch_assoc($ambil_id_pemasok);
-    $edit_id_pemasok = $data_id_pemasok['maxId'];
-
-    $noUrut = (int) substr($edit_id_pemasok, 4, 4);
-    $noUrut++;
-    $char = "PMSK";
-    $edit_id_pemasok = $char . sprintf("%04s", $noUrut);
-
+    $next_id = set_kode_baru('PMS', 'id_pemasok', 'pemasok');
 
     $halaman = 10;
     $page = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
@@ -172,8 +164,8 @@
                 <form action="" method="post">
                     <div class="form-group">
                         <label class="col-form-label" for="idPemasok">ID Pemasok</label>
-                        <input class="form-control" value="<?= $edit_id_pemasok; ?>" readonly name="id_pemasok" type="text" id="idPemasok">
-                    </div>
+                        <input class="form-control" value="<?= $next_id; ?>" readonly name="id_pemasok" type="text" id="idPemasok">
+                    </div
                     <div class="form-group">
                         <label class="col-form-label" for="namaPemasok">Nama Pemasok</label>
                         <input class="form-control" name="nama_pemasok" type="text" id="namaPemasok">

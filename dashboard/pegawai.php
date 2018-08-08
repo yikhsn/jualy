@@ -44,14 +44,7 @@
 
 <?php
 
-    $ambil_id_pegawai = ambil_id_pegawai();
-    $data_id_pegawai = mysqli_fetch_assoc($ambil_id_pegawai);
-    $edit_id_pegawai = $data_id_pegawai['maxId'];
-
-    $noUrut = (int) substr($edit_id_pegawai, 3, 3);
-    $noUrut++;
-    $char = "PGW";
-    $edit_id_pegawai = $char . sprintf("%03s", $noUrut);    
+    $next_id = set_kode_baru('PGW', 'id_pegawai', 'pegawai');    
     
     $halaman = 10;
     $page = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
@@ -171,7 +164,7 @@
                 <form action="" method="post">                
                     <div class="form-group">
                         <label class="col-form-label" for="idPegawai">ID Pegawai</label>
-                        <input class="form-control" value="<?= $edit_id_pegawai; ?>"name="id_pegawai" type="text" id="idPegawai" readonly>
+                        <input class="form-control" value="<?= $next_id; ?>"name="id_pegawai" type="text" id="idPegawai" readonly>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="namaPegawai">Nama Pegawai</label>

@@ -20,14 +20,7 @@
 
     require_once 'view/header.php';     
 
-    $ambil_kode_barang = ambil_kode_barang();
-    $data_kode_barang = mysqli_fetch_assoc($ambil_kode_barang);
-    $edit_kode_barang = $data_kode_barang['maxKode'];
-
-    $noUrut = (int) substr($edit_kode_barang, 3, 3);
-    $noUrut++;
-    $char = "BRG";
-    $edit_kode_barang = $char . sprintf("%03s", $noUrut);
+    $next_code = set_baru_key('BRG', 'kode_barang', 'barang');
 
     $halaman = 10;
     $page = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
@@ -204,7 +197,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="kodeBarang">Kode Barang</label>
-                        <input class="form-control" value="<?= $edit_kode_barang; ?>"name="kode" type="text" readonly id="kodeBarang">
+                        <input class="form-control" value="<?= $next_code; ?>"name="kode" type="text" readonly id="kodeBarang">
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="jumlahBarang">Jumlah Barang</label>
