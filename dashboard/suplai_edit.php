@@ -23,35 +23,62 @@
 
         while ($row = mysqli_fetch_array($data)){
             $kode_barang_lama = $row['kode_barang'];
-            $jumlah_barang_lama = $row['jumlah'];
+            $suplai_sebelumnya = $row['jumlah'];
         }
 
-        // die($kode_barang_lama);
+        /**
+         * if the changes is the same item
+         */
+        if( $kode_barang_lama == $_POST['kode_barang']){
 
-        if( $kode_barang_lama == $kode_barang){
-            if($jumlah >= $jumlah_barang_lama){
-                $jumlah_barang_tambah = $jumlah - $jumlah_barang_lama; 
+            /**
+             * if amount suply is more than the previous
+             */
+            if($_POST['jumlah'] >= $suplai_sebelumnya){
+
+                //count the amount item will be added to the item data
+                $jumlah_barang_tambah = $_POST['jumlah'] - $suplai_sebelumnya; 
                 
+                //update data suply to the latest changes data
                 update('suplai', $fields, 'kode_suplai', $id);
                 
+                //add the amount item will be added to the item data
                 tambah_pasokan_barang($kode_barang_lama, $jumlah_barang_tambah);
+                
                 header('Location: suplai.php');
             }
+            /**
+             * if the amount suply is lesser than previous
+             */
             else{
-                $jumlah_barang_kurang = $jumlah_barang_lama - $jumlah; 
                 
+                //count the amount item will be reduced to the item data
+                $jumlah_barang_kurang = $suplai_sebelumnya - $_POST['jumlah']; 
+                
+                //update data suply to the latest changes data
                 update('suplai', $fields, 'kode_suplai', $id);
                 
+                //reduce the amount item will be reduced to the item data
                 kurang_stok_barang($kode_barang_lama, $jumlah_barang_kurang);
+
                 header('Location: suplai.php');
             }
         }
+
+        /**
+         * if the changes is not the same item
+         */
         else{
             
+            //update the the latest changes suply data
             update('suplai', $fields, 'kode_suplai', $id);
             
-            tambah_pasokan_barang($kode_barang_lama, $jumlah_barang_lama);                
-            kurang_stok_barang($kode_barang, $jumlah);
+            //add the amount item of the new item will be added
+            tambah_pasokan_barang($_POST['kode_barang'], $_POST['jumlah']);
+
+            //reduce the amount item of the old item will be reduced
+            kurang_stok_barang($kode_barang_lama, $suplai_sebelumnya);
+
             header('Location: suplai.php');
 
         }

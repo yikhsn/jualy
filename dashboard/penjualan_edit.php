@@ -1,4 +1,4 @@
-<?php 
+<?php
     require_once 'core/init.php';
 
     if(!isset($_SESSION['username'])){
@@ -16,49 +16,79 @@
             'kode_barang'   => $_POST['kode_barang'],
             'jumlah'        => $_POST['jumlah'],
             'harga'         => $_POST['harga'],
-            'total_harga'   => $_POST['total_harga']    
+            'total_harga'   => $_POST['total_harga']
         );
 
         $data = getWhere('penjualan', 'kode_transaksi', $id);
-        
+
         while ($row = mysqli_fetch_array($data)){
-            $kode_barang_lama = $row['kode_barang'];
-            $jumlah_barang_lama = $row['jumlah'];
+            $kode_barang_lama       = $row['kode_barang'];
+            $jumlah_barang_lama     = $row['jumlah'];
         }
 
-        // die($kode_barang_lama);
-
+        /**
+         * if item the customer change to buy is the same item
+         */
         if( $kode_barang_lama == $_POST['kode_barang']){
-            if($jumlah >= $jumlah_barang_lama){
-                $jumlah_barang_kurang = $jumlah - $jumlah_barang_lama; 
-                
+
+            /**
+             * if the amount item change item is more than previous
+             */
+            if($_POST['jumlah'] >= $jumlah_barang_lama){
+
+                //count the amount item will be reduced to the item data
+                $jumlah_barang_kurang = $_POST['jumlah'] - $jumlah_barang_lama;
+
+                //update the changes order data to the latest changes data
                 update('penjualan', $fields, 'kode_transaksi', $id);
-                
-                kurang_stok_barang($kode_barang_lama, $jumlah_barang_kurang);
+
+                //reduce the item stock data
+                kurang_sisa_barang($kode_barang_lama, $jumlah_barang_kurang);
+
                 header('Location: penjualan.php');
             }
+
+            /**
+             * if the amount item change is lesser than previous
+             */
             else{
-                $jumlah_barang_tambah = $jumlah_barang_lama - $jumlah; 
-                
+
+                // count the amount item will be added again to the stock item
+                $jumlah_barang_tambah = $jumlah_barang_lama - $_POST['jumlah'];
+
+                //update the order data to the latest order data
                 update('penjualan', $fields, 'kode_transaksi', $id);
-                
-                tambah_pasokan_barang($kode_barang_lama, $jumlah_barang_tambah);
-                header('Location: penjualan.php');                     
+
+                //add the amount item will be added again to the stock item data
+                tambah_sisa_barang($kode_barang_lama, $jumlah_barang_tambah);
+
+                header('Location: penjualan.php');
             }
         }
+
+        /**
+         * if the item ordered was not the same item
+         */
         else{
-            update('penjualan', $fields, 'kode_transaksi', $id);            
-            tambah_pasokan_barang($kode_barang_lama, $jumlah_barang_lama);                
-            kurang_stok_barang($kode_barang, $jumlah);
+
+            //update the order detail to the latest changes
+            update('penjualan', $fields, 'kode_transaksi', $id);
+
+            //add the amount item of the old ordered to the stock again
+            tambah_sisa_barang($kode_barang_lama, $jumlah_barang_lama);
+
+            // reduce the stock item of the new item ordered
+            kurang_sisa_barang($_POST['kode_barang'], $_POST['jumlah']);
+
             header('Location: penjualan.php');
         }
-       
+
     }
 
-    require_once 'view/header.php';    
+    require_once 'view/header.php';
 
     $data = getWhere('penjualan', 'kode_transaksi', $id);
-    
+
     while ($row = mysqli_fetch_array($data)){
 ?>
 
@@ -91,10 +121,10 @@
                         <td>Kode Barang</td>
                         <td>
                         <select class="custom-select" name="kode_barang" id="kode_barang_edit">
-                        <option value="<?= $row['kode_barang']; ?>"><?= $row['kode_barang']; ?></option> 
+                        <option value="<?= $row['kode_barang']; ?>"><?= $row['kode_barang']; ?></option>
                             <?
                             $pilih_kode = getAll('barang', 'kode_barang');
-                            
+
                             $i = 1;
                             while($row_kode = mysqli_fetch_array($pilih_kode)) {
                             ?>
@@ -114,7 +144,7 @@
                         <td>Harga</td>
                         <td id="harga-barang-form">
                             <input name="harga" id="harga-barang-edit" type="text"  class="form-control" value="<?php echo $row['harga']?>" readonly>
-                        </td>                    
+                        </td>
                     </tr>
                     <tr>
                         <td>Total Harga</td>
@@ -124,9 +154,9 @@
             </div>
         </div>
 
-<?php } ?> 
+<?php } ?>
         <div class="row justify-content-end mr-3">
-            <input type="submit" name="update_penjualan" class="btn btn-secondary mx-1" value="Simpan">            
+            <input type="submit" name="update_penjualan" class="btn btn-secondary mx-1" value="Simpan">
         </div>
     </form>
 </div>

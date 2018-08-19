@@ -151,7 +151,7 @@
         return $hasil;
     }
 
-    function kurang_barang($kode_barang, $jumlah_kurang){
+    function kurang_sisa_barang($kode_barang, $jumlah_kurang){
         
         $data_jumlah_barang = getWhere('barang', 'kode_barang', $kode_barang, 'sisa');
         $jumlah_barang = mysqli_fetch_assoc($data_jumlah_barang);
@@ -160,6 +160,17 @@
         $hasil_kurang = $jumlah - $jumlah_kurang;
 
         update('barang', array('sisa' => $hasil_kurang), 'kode_barang', $kode_barang);
+    }
+
+    function tambah_sisa_barang($kode_barang, $jumlah_tambah){
+        
+        $data_jumlah_barang = getWhere('barang', 'kode_barang', $kode_barang, 'sisa');
+        $jumlah_barang = mysqli_fetch_assoc($data_jumlah_barang);
+        $jumlah = $jumlah_barang['sisa'];
+
+        $hasil_tambah = $jumlah + $jumlah_tambah;
+
+        update('barang', array('sisa' => $hasil_tambah), 'kode_barang', $kode_barang);
     }
 
     function tambah_pasokan_barang($kode_barang, $jumlah_pasokan){
