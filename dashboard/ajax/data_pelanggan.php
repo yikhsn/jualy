@@ -6,7 +6,7 @@ require '../functions/db.php';
     <label class="col-form-label" for="idPembeli">ID Pembeli</label>
     <select class="custom-select" name="id_pembeli" id="idPembeli">
         <?
-            $pelanggan = pilih_pelanggan();
+            $pelanggan = getAll($table, 'id_pembeli');
 
             print_r($pelanggan);
 

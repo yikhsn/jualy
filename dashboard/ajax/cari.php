@@ -24,7 +24,7 @@ $cari = $_GET['keyword'];
                     <tr>
                     <?php
 
-                        $barang = cari_barang($cari);
+                        $barang = getSearch('barang', 'nama_brg', 'kode_barang', $cari);
                         
                         $i = 1;
                         while($row = mysqli_fetch_assoc($barang)){

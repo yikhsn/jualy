@@ -5,7 +5,7 @@ require '../functions/db.php';
 
 $kode_barang = $_GET['kode_barang'];
 
-$nama_barang = ambil_nama_barang($kode_barang);
+$nama_barang = getWhere('barang', 'kode_barang', $kode_barang, 'nama_brg');
 
 while($row = mysqli_fetch_assoc($nama_barang)){
 

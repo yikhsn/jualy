@@ -180,7 +180,7 @@
                         <label class="col-form-label" for="idPemasok">ID Pemasok</label>
                         <select class="custom-select" name="id_pemasok" id="idPemasok">
                             <?
-                            $pemasok = pilih_pemasok();
+                            $pemasok = getAll('pemasok', 'id_pemasok');
 
                             while($row = mysqli_fetch_array($pemasok)) {
                             ?>
@@ -194,7 +194,7 @@
                         <label class="col-form-label" for="barang">Kode Barang</label>
                         <select class="custom-select" name="kode_barang" id="kode_barang_pasokan">
                             <?
-                            $pilih_kode = pilih_kode_barang();
+                            $pilih_kode = getAll('barang', 'kode_barang');
                             $i = 1;
                             while($row = mysqli_fetch_array($pilih_kode)) {
                             ?>
@@ -206,7 +206,7 @@
                     </div>
                     <div id="nama_barang_form" class="form-group">
                     <?
-                        $nama_barang = ambil_nama_barang($data_kode_barang[1]);
+                        $nama_barang = getWhere('barang', 'kode_barang', $data_kode_barang[1], 'nama_brg');
 
                         while($row = mysqli_fetch_assoc($nama_barang)){
                     ?>

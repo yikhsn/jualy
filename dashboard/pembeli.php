@@ -62,7 +62,7 @@
                     <tr>
                     <?php
                         if (isset($_POST['keyword'])){
-                            $pembeli = cari_pembeli($_POST['keyword']);
+                            $pembeli = getSearch('pembeli', 'id_pembeli', 'nama', $_POST['keyword']);
                         }
                         else{
                             $pembeli = getLimit('pembeli', $mulai, $halaman);                            
@@ -155,7 +155,7 @@
                 <form action="" method="post">
                     <div class="form-group">
                         <label class="col-form-label" for="idPembeli">ID Pelanggan</label>
-                        <input class="form-control" value="<?= $edit_id_pembeli; ?>" name="id_pembeli" type="text" id="idPembeli" readonly>
+                        <input class="form-control" value="<?= $next_id; ?>" name="id_pembeli" type="text" id="idPembeli" readonly>
                     </div>
                     <div class="form-group">
                         <label class="col-form-label" for="nama">Nama</label>

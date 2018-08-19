@@ -178,7 +178,7 @@
                         <label class="col-form-label" for="barang">Kode Barang</label>
                         <select class="custom-select" name="kode_barang" id="kode_barang">
                             <?
-                            $pilih_kode = pilih_kode_barang();
+                            $pilih_kode = getAll('barang', 'kode_barang');
                             $i = 1;
                             while($row = mysqli_fetch_array($pilih_kode)) {
                             ?>
@@ -194,7 +194,7 @@
                     </div>
                     <div id="harga-barang-form" class="form-group">
                     <?
-                        $harga_barang = ambil_harga_barang($data_kode_barang[1]);
+                        $harga_barang = getWhere('barang', 'kode_barang', $data_kode_barang[1], 'harga_brg');
 
                         while($row2 = mysqli_fetch_assoc($harga_barang)){
                     ?>

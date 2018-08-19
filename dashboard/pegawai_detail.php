@@ -13,7 +13,7 @@
     
     require_once 'view/header.php';    
     
-    $data = getLimitWhere('pegawai', 'id_pegawai', $id);
+    $data = getWhere('pegawai', 'id_pegawai', $id, 'id_pegawai');
 
     while ($row = mysqli_fetch_array($data)){
 ?>

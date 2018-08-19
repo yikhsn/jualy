@@ -22,7 +22,7 @@ $cari = $_GET['keyword'];
                 <tbody>
                     <tr>
                     <?php
-                        $pemasok = cari_pemasok($cari);
+                        $pemasok = getSearch('pemasok', 'nama_pemasok', 'id_pemasok', $cari);
                         
                         $no = 1;
                         while($row = mysqli_fetch_assoc($pemasok)){

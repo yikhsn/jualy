@@ -21,7 +21,7 @@ $cari = $_GET['keyword'];
 				<tbody>
 					<tr>
 						<?php
-							$pembeli = cari_pembeli($cari);
+							$pembeli = getSearch('pembeli', 'id_pembeli', 'nama', $cari);
 
 							$no = 1;
 							while($row = mysqli_fetch_assoc($pembeli)){

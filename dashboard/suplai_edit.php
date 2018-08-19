@@ -12,15 +12,18 @@
     $id = $_GET['kode_suplai'];
 
     if(isset($_POST['update_suplai'])){
-        $id_pemasok = $_POST['id_pemasok'];
-        $waktu = $_POST['waktu'];
-        $kode_barang = $_POST['kode_barang'];
-        $nama_barang = $_POST['nama_barang'];
-        $jumlah = $_POST['jumlah'];
-        $harga = $_POST['harga'];
-        $total_harga = $_POST['total_harga'];
+        
+        $fields = array(
+            'id_pemasok'    => $_POST['id_pemasok'],
+            'waktu'         => $_POST['waktu'],
+            'kode_barang'   => $_POST['kode_barang'],
+            'nama_barang'   => $_POST['nama_barang'],
+            'jumlah'        => $_POST['jumlah'],
+            'harga'         => $_POST['harga'],
+            'total_harga'   => $_POST['total_harga']
+        );
 
-        $data = getLimitWhere('suplai', 'kode_suplai', $id);
+        $data = getWhere('suplai', 'kode_suplai', $id);
 
         while ($row = mysqli_fetch_array($data)){
             $kode_barang_lama = $row['kode_barang'];
@@ -32,19 +35,25 @@
         if( $kode_barang_lama == $kode_barang){
             if($jumlah >= $jumlah_barang_lama){
                 $jumlah_barang_tambah = $jumlah - $jumlah_barang_lama; 
-                update_suplai($id, $id_pemasok, $waktu, $kode_barang, $nama_barang, $jumlah, $harga, $total_harga);
+                
+                update('suplai', $fields, 'kode_suplai', $id);
+                
                 tambah_pasokan_barang($kode_barang_lama, $jumlah_barang_tambah);
                 header('Location: suplai.php');
             }
             else{
                 $jumlah_barang_kurang = $jumlah_barang_lama - $jumlah; 
-                update_suplai($id, $id_pemasok, $waktu, $kode_barang, $nama_barang, $jumlah, $harga, $total_harga);
+                
+                update('suplai', $fields, 'kode_suplai', $id);
+                
                 kurang_stok_barang($kode_barang_lama, $jumlah_barang_kurang);
                 header('Location: suplai.php');
             }
         }
         else{
-            update_suplai($id, $id_pemasok, $waktu, $kode_barang, $nama_barang, $jumlah, $harga, $total_harga);
+            
+            update('suplai', $fields, 'kode_suplai', $id);
+            
             tambah_pasokan_barang($kode_barang_lama, $jumlah_barang_lama);                
             kurang_stok_barang($kode_barang, $jumlah);
             header('Location: suplai.php');
@@ -54,7 +63,7 @@
 
     require_once 'view/header.php';    
 
-    $data = getLimitWhere('suplai', 'kode_suplai', $id);
+    $data = getWhere('suplai', 'kode_suplai', $id);
     while ($row = mysqli_fetch_array($data)){
 ?>
 
@@ -76,11 +85,11 @@
                         <td>
                             <select class="custom-select" name="id_pemasok" id="id_pemasok">                        
                             <?
-                                $pemasok = pilih_pemasok();
+                                $pemasok = getAll('pemasok', 'id_pemasok');
 
                                 while($data_pemasok = mysqli_fetch_array($pemasok)) {
                                 ?>
-                                <option value="<?= $data_pemasok['id_pemasok']?>"><?= $row['id_pemasok'] ?></option>
+                                <option value="<?= $data_pemasok['id_pemasok']?>"><?= $data_pemasok['id_pemasok'] ?></option>
                                 <?
                                 }
                                 ?>
@@ -96,7 +105,7 @@
                             <select class="custom-select" name="kode_barang" id="kode_barang_suplai">
                             <option value="<?= $row['kode_barang']; ?>"><?= $row['kode_barang']; ?></option> 
                                 <?
-                                $pilih_kode = pilih_kode_barang();
+                                $pilih_kode = getAll('barang', 'kode_barang');
                                 $i = 1;
                                 while($row_kode = mysqli_fetch_array($pilih_kode)) {
                                 ?>

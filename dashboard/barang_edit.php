@@ -8,19 +8,23 @@
     $kode = $_GET['kode'];
 
     if(isset($_POST['update_barang'])){
-        $nama = $_POST['nama'];
-        $jenis = $_POST['jenis'];
-        $kode_barang = $kode;
-        $harga = $_POST['harga'];
-        $jumlah = $_POST['jumlah'];
-        $sisa = $_POST['sisa'];
-        $suplier = $_POST['suplier'];
+        
+        $fields = array(
+            'nama'          => $_POST['nama'],
+            'jenis'         => $_POST['jenis'],
+            'kode_barang'   => $kode,
+            'harga'         => $_POST['harga'],
+            'jumlah'        => $_POST['jumlah'],
+            'sisa'          => $_POST['sisa'],
+            'suplier'       => $_POST['suplier']    
+        );
+        
+        update('barang', $fields, 'kode_barang', $kode);
 
-        update($nama, $jenis, $kode_barang, $harga, $jumlah, $sisa, $suplier);
         header('Location: barang.php');
     }
 
-    $data = getLimitWhere('barang', 'kode_barang', $kode);
+    $data = getWhere('barang', 'kode_barang', $kode);
     while ($row = mysqli_fetch_array($data)){
 ?>
 
@@ -47,6 +51,7 @@
                         <select class="custom-select" name="jenis" id="jenisBarang">
                             <?
                             $jenis = pilih_jenis();
+                            
                             while($pilih_jenis_brg = mysqli_fetch_array($jenis)) {
                             ?>
                             <option value="<?= $pilih_jenis_brg['jenis_brg'] ?>"><?= $pilih_jenis_brg['jenis_brg'] ?></option>
@@ -75,8 +80,9 @@
                         <td>
                         <select class="custom-select" name="suplier" id="penyuplai">
                             <?
-                            $pilih_penyuplai = pilih_penyuplai();
-                            while($penyuplai = mysqli_fetch_array($pilih_penyuplai)) {
+                            $data_penyuplai = getAll('pemasok', 'nama_pemasok');
+
+                            while($penyuplai = mysqli_fetch_array($data_penyuplai)) {
                             ?>
                             <option value="<?= $penyuplai['nama_pemasok'] ?>"><?= $penyuplai['nama_pemasok'] ?></option>
                             <?

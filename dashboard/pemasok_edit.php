@@ -4,12 +4,15 @@
     $id = $_GET['id'];    
 
     if(isset($_POST['update_pemasok'])){
-        $nama = $_POST['nama_pemasok'];
-        $barang = $_POST['barang'];
-        $telepon = $_POST['telepon'];
-        $alamat = $_POST['alamat'];
+        
+        $fields = array(
+            'nama_pemasok'  => $_POST['nama_pemasok'],
+            'alamat'        => $_POST['alamat'],
+            'barang'        => $_POST['barang'],
+            'telepon'       => $_POST['telepon']
+        );
 
-        update_pemasok($id, $nama, $barang, $telepon, $alamat);
+        update('pemasok', $fields, 'id_pemasok', $id);
         header('Location: pemasok.php');
     }
 
@@ -23,7 +26,7 @@
 
     require_once 'view/header.php';    
 
-    $data = getLimitWhere('pemasok', 'id_pemasok', $id);
+    $data = getWhere('pemasok', 'id_pemasok', $id);
     
     while ($row = mysqli_fetch_array($data)){
 ?>

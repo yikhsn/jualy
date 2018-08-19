@@ -9,7 +9,7 @@
 
     $id = $_GET['id'];
 
-    $data = getLimitWhere('pembeli', 'id_pembeli', $id);
+    $data = getWhere('pembeli', 'id_pembeli', $id);
 
     while ($row = mysqli_fetch_array($data)){
 ?>

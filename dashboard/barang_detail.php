@@ -6,7 +6,7 @@
     }
  
     $kode = $_GET['kode'];
-    $data = getLimitWhere('barang', 'kode_barang', $kode);
+    $data = getWhere('barang', 'kode_barang', $kode);
 
     while ($row = mysqli_fetch_array($data)){
         $jenis = $row['jenis_brg'];

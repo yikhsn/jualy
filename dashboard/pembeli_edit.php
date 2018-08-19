@@ -8,17 +8,20 @@
     $id = $_GET['id'];
     
     if(isset($_POST['update_pembeli'])){
-        $nama = $_POST['nama'];
-        $jenis_kelamin = $_POST['jenis_kelamin'];
-        $alamat = $_POST['alamat'];
+        
+        $fields = array(
+            'nama'           => $_POST['nama'],
+            'jenis_kelamin'  => $_POST['jenis_kelamin'],
+            'alamat'         => $_POST['alamat']    
+        );
 
-        update_pembeli($id, $nama, $jenis_kelamin, $alamat);
+        update('pembeli', $fields, 'id_pembeli', $id);
         header('Location: pembeli.php');
     }
 
     require_once 'view/header.php';    
 
-    $data = getLimitWhere('pembeli', 'id_pembeli', $id);
+    $data = getWhere('pembeli', 'id_pembeli', $id);
     
     while ($row = mysqli_fetch_array($data)){
 ?>

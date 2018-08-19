@@ -28,7 +28,7 @@ $shift = $_GET['shift'];
                         $pegawai = getAll('pegawai');
 
                         if(isset($shift)){
-                            $pegawai = getLimitWhere('pegawai', 'shift', $shift);
+                            $pegawai = getWhere('pegawai', 'shift', $shift);
                         }
                                                 
                         $i = 1;

@@ -9,7 +9,7 @@
     $data_kode_transaksi = mysqli_fetch_assoc($ambil_kode_transaksi);
     $edit_kode_transaksi = $data_kode_transaksi['maxKode'];
 
-    $sql = getLimitWhere('penjualan', 'kode_transaksi', $edit_kode_transaksi);
+    $sql = getWhere('penjualan', 'kode_transaksi', $edit_kode_transaksi);
     $data = array();
 
 

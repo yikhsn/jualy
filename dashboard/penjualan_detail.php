@@ -7,7 +7,7 @@
 
     $id = $_GET['kode_transaksi'];
 
-    $data = getLimitWhere('penjualan', 'kode_transaksi', $id);
+    $data = getWhere('penjualan', 'kode_transaksi', $id);
 
     require_once 'view/header.php';    
 

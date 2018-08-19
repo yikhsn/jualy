@@ -1,5 +1,22 @@
 <?php
 
+    function update($table, array $fields, $column, $where){
+        
+        foreach($fields as $key => $value){
+            $data[] = $key . '=' . "'" . $value . "'";
+        }
+
+        $query = sprintf(
+            "UPDATE %s SET %s WHERE %s = '%s'",
+            $table,
+            implode(", ", $data),
+            $column,
+            $where
+        );
+
+        return ambil($query);
+    }
+
     function ambil($query){
         global $link;
         
@@ -8,8 +25,8 @@
         }
     }
 
-    function getAll($table){
-        $query = "SELECT * FROM $table";
+    function getAll($table, $column = '*' ){
+        $query = "SELECT $column FROM $table";
 
         return ambil($query);
     }
@@ -20,9 +37,9 @@
         return ambil($query);
     }
 
-    function getLimitWhere($table, $column, $value)
+    function getWhere($table, $column, $value, $data = '*')
     {
-        $query = "SELECT * FROM $table WHERE $column = '$value'";
+        $query = "SELECT $data FROM $table WHERE $column = '$value'";
 
         return ambil($query);
     }
@@ -51,27 +68,10 @@
 
         return $key . sprintf("%03s", $noUrut);
     }
-    
-    function ambil_nama_pegawai($kode_username){
-        $query = "SELECT nama_pegawai FROM pegawai WHERE id_pegawai='$kode_username'";
 
-        return ambil($query);
-    }
+    function getSearch($table, $column, $column2, $keyword){
+        $query = "SELECT * FROM $table WHERE $column LIKE '%$keyword%' OR $column2 LIKE '%$keyword%'";
 
-    function cari_barang($cari){
-        $query = "SELECT * FROM barang WHERE nama_brg LIKE '%$cari%' OR kode_barang LIKE '%$cari%'";
-        return ambil($query);
-    }
-
-    function cari_pembeli($cari){
-        $query = "SELECT * FROM pembeli WHERE nama LIKE '%$cari%' OR id_pembeli LIKE '%$cari%'";
-        
-        return ambil($query);
-    }
-
-    function cari_pemasok($cari){
-        $query = "SELECT * FROM pemasok WHERE nama_pemasok LIKE '%$cari%' OR id_pemasok LIKE '%$cari%'";
-        
         return ambil($query);
     }
 
@@ -83,14 +83,14 @@
         return ambil($query);
     }
 
-    function update($nama, $jenis, $kode, $harga, $jumlah, $sisa, $suplier){
-        $query = "UPDATE barang 
-                        SET nama_brg='$nama', jenis_brg='$jenis', harga_brg='$harga',
-                        jumlah='$jumlah', sisa='$sisa', suplier='$suplier'
-                        WHERE kode_barang='$kode'";
+    // function update($nama, $jenis, $kode, $harga, $jumlah, $sisa, $suplier){
+    //     $query = "UPDATE barang 
+    //                     SET nama_brg='$nama', jenis_brg='$jenis', harga_brg='$harga',
+    //                     jumlah='$jumlah', sisa='$sisa', suplier='$suplier'
+    //                     WHERE kode_barang='$kode'";
     
-        return ambil($query);
-    }
+    //     return ambil($query);
+    // }
 
     function menghitung_record(){
         $query = "SELECT COUNT(*) FROM barang";
@@ -102,25 +102,11 @@
         return ambil($query);
     }
 
-    function pilih_pelanggan(){
-        $query = "SELECT id_pembeli FROM pembeli";
-
-        return ambil($query);
-    }
-
     function tambah_pegawai($id_pegawai, $nama_pegawai, $shift, $jenis_kelamin, $alamat, $no_hape){
         $query = "INSERT INTO pegawai (id_pegawai, nama_pegawai, shift, jenis_kelamin, alamat, no_hape)
                                VALUES('$id_pegawai', '$nama_pegawai', '$shift', '$jenis_kelamin', '$alamat', '$no_hape')" 
                                or die(mysqli_error());
 
-        return ambil($query);
-    }
-
-
-    function update_pegawai($id, $nama, $shift, $jenis_kelamin, $alamat, $no_hape){
-        $query = "UPDATE pegawai SET  nama_pegawai='$nama', shift='$shift', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_hape='$no_hape'
-                         WHERE id_pegawai='$id'";
-    
         return ambil($query);
     }
 
@@ -132,37 +118,10 @@
         return ambil($query);
     }
 
-    function pilih_penyuplai(){
-        $query = "SELECT nama_pemasok FROM pemasok";
-
-        return ambil($query);
-    }
-
-
-    function update_pemasok($id, $nama, $barang, $telepon, $alamat) {
-        $query = "UPDATE pemasok 
-                    SET nama_pemasok='$nama', barang='$barang', telepon='$telepon', alamat='$alamat' 
-                    WHERE id_pemasok='$id'";
-
-        return ambil($query);
-    }
-
-
-
     function tambah_pembeli($id_pembeli, $nama, $alamat, $jenis_kelamin) {
         $query = "INSERT INTO pembeli (id_pembeli, nama, alamat, jenis_kelamin)
                             VALUES('$id_pembeli', '$nama', '$alamat', '$jenis_kelamin')"
                             or die(mysqli_error());
-
-        return ambil($query);
-    }
-
-
-
-    function update_pembeli($id, $nama, $jenis_kelamin, $alamat){
-        $query = "UPDATE pembeli 
-                    SET nama='$nama', jenis_kelamin='$jenis_kelamin', alamat='$alamat' 
-                    WHERE id_pembeli='$id'";
 
         return ambil($query);
     }
@@ -194,43 +153,10 @@
         return ambil($query);
     }
 
-    function tampilkan_penjualan_terbaru($kode_transaksi){
-        $query = "SELECT * FROM penjualan WHERE kode_transaksi='$kode_transaksi'";
-        
-        return ambil($query);
-    }
-
     function tambah_penjualan($kode_transaksi, $id_pembeli, $id_pegawai, $waktu, $kode_barang, $jumlah, $harga, $total_harga) {
         $query = "INSERT INTO penjualan (kode_transaksi, id_pembeli, id_pegawai, waktu, kode_barang, jumlah, harga, total_harga)
                         VALUES('$kode_transaksi', '$id_pembeli', '$id_pegawai', '$waktu', '$kode_barang', '$jumlah', '$harga', '$total_harga')" or die(mysqli_error());
     
-        return ambil($query);
-    }
-
-
-
-    function update_penjualan($id, $id_pembeli, $id_pegawai, $waktu, $kode_barang, $jumlah, $harga, $total_harga){
-        $query = "UPDATE penjualan SET  id_pembeli='$id_pembeli', id_pegawai='$id_pegawai', waktu='$waktu', kode_barang='$kode_barang', jumlah='$jumlah', harga='$harga', total_harga='$total_harga'
-                         WHERE kode_transaksi='$id'";
-    
-        return ambil($query);
-    }
-
-    function pilih_kode_barang(){
-        $query = "SELECT DISTINCT(kode_barang) AS kode_barang FROM barang ORDER BY kode_barang ASC";
-        
-        return ambil($query);
-    }
-
-    function ambil_harga_barang($kode_barang){
-        $query = "SELECT harga_brg FROM barang WHERE kode_barang='$kode_barang'";
-
-        return ambil($query);
-    }
-
-    function ambil_nama_barang($kode_barang){
-        $query = "SELECT nama_brg FROM barang WHERE kode_barang='$kode_barang'";
-
         return ambil($query);
     }
 
@@ -258,20 +184,6 @@
         return ambil($query);
     }
 
-
-    function update_suplai($id, $id_pemasok, $waktu, $kode_barang, $nama_barang, $jumlah, $harga, $total_harga) {
-        $query = "UPDATE suplai SET id_pemasok='$id_pemasok', waktu='$waktu', kode_barang='$kode_barang', nama_barang='$nama_barang', jumlah='$jumlah', 
-                                    harga='$harga', total_harga='$total_harga' WHERE kode_suplai='$id'";
-
-        return ambil($query);
-    }
-
-    function pilih_pemasok(){
-        $query = "SELECT DISTINCT(id_pemasok) AS id_pemasok FROM pemasok";
-
-        return ambil($query);
-    }
-
     function rupiah($angka){
         $hasil_rupiah = "Rp. " . number_format($angka,0,'','.');
         
@@ -282,12 +194,6 @@
         $hasil = number_format($angka, 0, '', '.');
 
         return $hasil;
-    }
-
-    function lihat_jumlah_barang($kode_barang){
-        $query = "SELECT sisa FROM barang WHERE kode_barang='$kode_barang'";
-
-        return ambil($query);
     }
 
     function update_sisa_barang($kode_barang, $hasil){
@@ -304,7 +210,7 @@
 
     function kurang_barang($kode_barang, $jumlah_kurang){
         
-        $data_jumlah_barang = lihat_jumlah_barang($kode_barang);
+        $data_jumlah_barang = getWhere('barang', 'kode_barang', $kode_barang, 'sisa');
         $jumlah_barang = mysqli_fetch_assoc($data_jumlah_barang);
         $jumlah = $jumlah_barang['sisa'];
 
@@ -313,22 +219,10 @@
         update_sisa_barang($kode_barang, $hasil_kurang);
     }
 
-    function sisa_barang($kode_barang){
-        $query = "SELECT sisa FROM barang WHERE kode_barang='$kode_barang'";
-
-        return ambil($query);
-    }
-
-    function jumlah_barang($kode_barang){
-        $query = "SELECT jumlah FROM barang WHERE kode_barang='$kode_barang'";
-
-        return ambil($query);
-    }
-
     function tambah_pasokan_barang($kode_barang, $jumlah_pasokan){
         
-        $ambil_sisa = sisa_barang($kode_barang);
-        $ambil_jumlah = jumlah_barang($kode_barang);
+        $ambil_sisa = getWhere('barang', 'kode_barang', $kode_barang, 'sisa');
+        $ambil_jumlah = getWhere('barang', 'kode_barang', $kode_barang, 'jumlah');
 
         $data_sisa = mysqli_fetch_assoc($ambil_sisa);
         $data_jumlah = mysqli_fetch_assoc($ambil_jumlah);
@@ -345,8 +239,8 @@
 
     function kurang_stok_barang($kode_barang, $jumlah_kurang){
         
-        $ambil_sisa = sisa_barang($kode_barang);
-        $ambil_jumlah = jumlah_barang($kode_barang);
+        $ambil_sisa = getWhere('barang', 'kode_barang', $kode_barang, 'sisa');
+        $ambil_jumlah = getWhere('barang', 'kode_barang', $kode_barang, 'jumlah');
 
         $data_sisa = mysqli_fetch_assoc($ambil_sisa);
         $data_jumlah = mysqli_fetch_assoc($ambil_jumlah);

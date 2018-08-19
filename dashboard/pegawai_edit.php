@@ -12,19 +12,23 @@
     $id = $_GET['id'];    
     
     if(isset($_POST['update_pegawai'])){
-        $nama = $_POST['nama_pegawai'];
-        $shift = $_POST['shift'];
-        $jenis_kelamin = $_POST['jenis_kelamin'];
-        $alamat = $_POST['alamat'];
-        $no_hape = $_POST['no_hape'];
 
-        update_pegawai($id, $nama, $shift, $jenis_kelamin, $alamat, $no_hape);
+        $fields = array(
+            'nama_pegawai'  => $_POST['nama_pegawai'],
+            'shift'         => $_POST['shift'],
+            'jenis_kelamin' => $_POST['jenis_kelamin'],
+            'alamat'        => $_POST['alamat'],
+            'no_hape'       => $_POST['no_hape']    
+        );
+
+        update('pegawai', $fields, 'id_pegawai', $id);
+        
         header('Location: pegawai.php');
     }
 
     require_once 'view/header.php';    
  
-    $data = getLimitWhere('pegawai', 'id_pegawai', $id);
+    $data = getWhere('pegawai', 'id_pegawai', $id);
 
     while ($row = mysqli_fetch_array($data)){
 ?>

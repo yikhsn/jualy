@@ -25,8 +25,8 @@
 			$username = "Admin";
 		}
 		else {
-			$kode_username = $_SESSION['username'];
-			$hasil_ambil = ambil_nama_pegawai($kode_username);
+			$id_pegawai = $_SESSION['username'];
+			$hasil_ambil = getWhere('pegawai', 'id_pegawai', $id_pegawai, 'nama_pegawai');
 			$data_username = mysqli_fetch_assoc($hasil_ambil);
 			$username = $data_username['nama_pegawai'];
 		}		

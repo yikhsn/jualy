@@ -67,7 +67,7 @@
                     <tr>
                     <?php
                         if (isset($_POST['keyword'])){
-                            $barang = cari_barang($_POST['keyword']);
+                            $barang = getSearch('barang', 'nama_brg', 'kode_barang', $_POST['keyword']);
                         }
                         else{
                             $barang = getLimit('barang', $mulai, $halaman);                            
@@ -207,8 +207,9 @@
                         <label class="col-form-label" for="penyuplai">Penyuplai</label>
                         <select class="custom-select" name="suplier" id="penyuplai">
                             <?
-                            $pilih_penyuplai = pilih_penyuplai();
-                            while($row = mysqli_fetch_array($pilih_penyuplai)) {
+                            $data_penyuplai = getAll('pemasok', 'nama_pemasok');
+
+                            while($row = mysqli_fetch_array($data_penyuplai)) {
                             ?>
                             <option value="<?= $row['nama_pemasok'] ?>"><?= $row['nama_pemasok'] ?></option>
                             <?

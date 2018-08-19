@@ -70,7 +70,7 @@
                     <tr>
                     <?php
                         if (isset($_POST['keyword'])){
-                            $pemasok = cari_pemasok($_POST['keyword']);
+                            $pemasok = getSearch('pemasok', 'nama_pemasok', 'id_pemasok', $_POST['keyword']);
                         }
                         else{
                             $pemasok = getLimit('pemasok', $mulai, $halaman);
