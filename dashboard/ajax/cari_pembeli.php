@@ -1,7 +1,6 @@
 <?php
 require '../functions/act.php';
 require '../functions/db.php';
-require '../functions/user.php';
 
 $cari = $_GET['keyword'];
 ?>

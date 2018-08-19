@@ -73,7 +73,7 @@
                             $pemasok = cari_pemasok($_POST['keyword']);
                         }
                         else{
-                            $pemasok = tampilkan_pemasok($mulai, $halaman);
+                            $pemasok = getLimit('pemasok', $mulai, $halaman);
                         }
                         
                         $no = $mulai + 1;

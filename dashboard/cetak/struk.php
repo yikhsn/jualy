@@ -4,11 +4,12 @@
     require '../functions/db.php';
     require '../lib/fpdf/fpdf.php';
 
-    $ambil_kode_transaksi = ambil_kode_transaksi();
+    $ambil_kode_transaksi = ambil_max_kode('kode_transaksi', 'penjualan');
+
     $data_kode_transaksi = mysqli_fetch_assoc($ambil_kode_transaksi);
     $edit_kode_transaksi = $data_kode_transaksi['maxKode'];
 
-    $sql = tampilkan_penjualan_terbaru($edit_kode_transaksi);
+    $sql = getLimitWhere('penjualan', 'kode_transaksi', $edit_kode_transaksi);
     $data = array();
 
 

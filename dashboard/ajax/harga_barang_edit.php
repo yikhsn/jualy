@@ -2,7 +2,6 @@
 
 require '../functions/act.php';
 require '../functions/db.php';
-require '../functions/user.php';  
 
 $kode_barang = $_GET['kode_barang'];
 

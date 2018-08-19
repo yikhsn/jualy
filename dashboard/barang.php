@@ -20,7 +20,7 @@
 
     require_once 'view/header.php';     
 
-    $next_code = set_baru_key('BRG', 'kode_barang', 'barang');
+    $next_code = set_kode_baru('BRG', 'kode_barang', 'barang');
 
     $halaman = 10;
     $page = isset($_GET['halaman'])? (int)$_GET['halaman'] : 1;
@@ -70,7 +70,7 @@
                             $barang = cari_barang($_POST['keyword']);
                         }
                         else{
-                            $barang = tampilkan_barang($mulai, $halaman);                            
+                            $barang = getLimit('barang', $mulai, $halaman);                            
                         }
                         
                         $no = $mulai + 1;

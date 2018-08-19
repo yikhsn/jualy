@@ -4,7 +4,6 @@ session_start();
 
 require 'dashboard/functions/act.php';
 require 'dashboard/functions/db.php';
-require 'dashboard/functions/user.php';  
 
 $username=$_POST['username'];
 $password=$_POST['password'];

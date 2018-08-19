@@ -65,7 +65,7 @@
                             $pembeli = cari_pembeli($_POST['keyword']);
                         }
                         else{
-                            $pembeli = tampilkan_pembeli($mulai, $halaman);                            
+                            $pembeli = getLimit('pembeli', $mulai, $halaman);                            
                         }
     
                         $no = $mulai + 1;

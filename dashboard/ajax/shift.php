@@ -2,7 +2,6 @@
 
 require '../functions/act.php';
 require '../functions/db.php';
-require '../functions/user.php';  
 
 $shift = $_GET['shift'];
 
@@ -26,18 +25,12 @@ $shift = $_GET['shift'];
                     <tr>
                     <?php
 
+                        $pegawai = getAll('pegawai');
+
                         if(isset($shift)){
-
-                            $pegawai = filter_pegawai($shift);
-                        
+                            $pegawai = getLimitWhere('pegawai', 'shift', $shift);
                         }
-
-                        else{
-
-                            $pegawai = tampilkan_semua_pegawai();
-                        
-                        }
-                        
+                                                
                         $i = 1;
                         
                         while($row = mysqli_fetch_assoc($pegawai)){

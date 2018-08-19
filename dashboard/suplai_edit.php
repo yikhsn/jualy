@@ -20,7 +20,8 @@
         $harga = $_POST['harga'];
         $total_harga = $_POST['total_harga'];
 
-        $data = detail_suplai($id);
+        $data = getLimitWhere('suplai', 'kode_suplai', $id);
+
         while ($row = mysqli_fetch_array($data)){
             $kode_barang_lama = $row['kode_barang'];
             $jumlah_barang_lama = $row['jumlah'];
@@ -53,7 +54,7 @@
 
     require_once 'view/header.php';    
 
-    $data = detail_suplai($id);
+    $data = getLimitWhere('suplai', 'kode_suplai', $id);
     while ($row = mysqli_fetch_array($data)){
 ?>
 

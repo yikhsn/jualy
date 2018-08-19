@@ -81,7 +81,7 @@
                 <tbody>
                     <tr>
                     <?php
-                        $penjualan = tampilkan_penjualan($mulai, $halaman);
+                        $penjualan = getLimit('penjualan', $mulai, $halaman);
                         
                         $no = $mulai + 1;
                         while($row = mysqli_fetch_assoc($penjualan)){

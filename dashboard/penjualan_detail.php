@@ -6,7 +6,8 @@
     }
 
     $id = $_GET['kode_transaksi'];
-    $data = detail_penjualan($id);
+
+    $data = getLimitWhere('penjualan', 'kode_transaksi', $id);
 
     require_once 'view/header.php';    
 

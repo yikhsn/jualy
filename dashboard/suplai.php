@@ -78,7 +78,7 @@
                 <tbody>
                     <tr>
                     <?php
-                        $data_suplai = tampilkan_suplai($mulai, $halaman);
+                        $data_suplai = getLimit('suplai', $mulai, $halaman);
                         
                         $no = $mulai + 1;
                         while($row = mysqli_fetch_assoc($data_suplai)){

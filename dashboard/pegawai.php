@@ -72,7 +72,7 @@
                 <tbody>
                     <tr>
                     <?php
-                        $barang = tampilkan_pegawai($mulai, $halaman);
+                        $barang = getLimit('pegawai', $mulai, $halaman);
                         
                         $no = $mulai + 1;
                         

@@ -1,7 +1,6 @@
 <?
     require '../functions/act.php';
     require '../functions/db.php';
-    require '../functions/user.php';
 
     $dari = $_GET['dari'];
     $sampai = $_GET['sampai'];

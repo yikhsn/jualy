@@ -13,7 +13,7 @@
     
     require_once 'view/header.php';
          
-    $data = detail_suplai($id);
+    $data = getLimitWhere('suplai', 'kode_suplai', $id);
 
     while ($row = mysqli_fetch_array($data)){
         

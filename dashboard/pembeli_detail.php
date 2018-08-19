@@ -8,7 +8,8 @@
     require_once 'view/header.php';    
 
     $id = $_GET['id'];
-    $data = detail_pembeli($id);
+
+    $data = getLimitWhere('pembeli', 'id_pembeli', $id);
 
     while ($row = mysqli_fetch_array($data)){
 ?>

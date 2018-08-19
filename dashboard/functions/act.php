@@ -7,6 +7,26 @@
             return $ambil;
         }
     }
+
+    function getAll($table){
+        $query = "SELECT * FROM $table";
+
+        return ambil($query);
+    }
+
+    function getLimit($table, $offset, $limit){
+        $query = "SELECT * FROM $table LIMIT $offset, $limit";
+
+        return ambil($query);
+    }
+
+    function getLimitWhere($table, $column, $value)
+    {
+        $query = "SELECT * FROM $table WHERE $column = '$value'";
+
+        return ambil($query);
+    }
+
     function ambil_data_transaksi($hari_ini){
         $query = "SELECT COUNT(*) 
                     FROM penjualan
@@ -35,23 +55,6 @@
     function ambil_nama_pegawai($kode_username){
         $query = "SELECT nama_pegawai FROM pegawai WHERE id_pegawai='$kode_username'";
 
-        return ambil($query);
-    }
-
-    function tampilkan_barang($mulai, $halaman){
-        $query = "SELECT * FROM barang LIMIT $mulai, $halaman";
-        return ambil($query);
-    }
-    
-    function detail_barang($kode){
-        $query = "SELECT * FROM barang WHERE kode_barang='$kode'";
-        
-        return ambil($query);
-    }
-
-    function detail_barang_baru($kode){
-        $query = "SELECT * FROM barang WHERE kode_barang='$kode'";
-        
         return ambil($query);
     }
 
@@ -105,22 +108,6 @@
         return ambil($query);
     }
 
-    function tampilkan_pegawai($mulai, $halaman){
-        $query = "SELECT * FROM pegawai LIMIT $mulai, $halaman";
-        return ambil($query);
-    }
-
-    function tampilkan_semua_pegawai(){
-        $query = "SELECT * FROM pegawai";
-        return ambil($query);
-    }
-
-    function filter_pegawai($shift) {
-        $query = "SELECT * FROM pegawai WHERE shift='$shift'";
-
-        return ambil($query);
-    }
-
     function tambah_pegawai($id_pegawai, $nama_pegawai, $shift, $jenis_kelamin, $alamat, $no_hape){
         $query = "INSERT INTO pegawai (id_pegawai, nama_pegawai, shift, jenis_kelamin, alamat, no_hape)
                                VALUES('$id_pegawai', '$nama_pegawai', '$shift', '$jenis_kelamin', '$alamat', '$no_hape')" 
@@ -129,24 +116,11 @@
         return ambil($query);
     }
 
-    function detail_pegawai($id){
-        $query = "SELECT * FROM pegawai 
-                    WHERE id_pegawai='$id'";
-        
-        return ambil($query);
-    }
 
     function update_pegawai($id, $nama, $shift, $jenis_kelamin, $alamat, $no_hape){
         $query = "UPDATE pegawai SET  nama_pegawai='$nama', shift='$shift', jenis_kelamin='$jenis_kelamin', alamat='$alamat', no_hape='$no_hape'
                          WHERE id_pegawai='$id'";
     
-        return ambil($query);
-    }
-
-    function tampilkan_pemasok($mulai, $halaman){
-        $query = "SELECT * FROM pemasok 
-                    LIMIT $mulai, $halaman";
-        
         return ambil($query);
     }
 
@@ -164,11 +138,6 @@
         return ambil($query);
     }
 
-    function detail_pemasok($id) {
-        $query = "SELECT * FROM pemasok
-                    WHERE id_pemasok='$id'";
-        return ambil($query);
-    }
 
     function update_pemasok($id, $nama, $barang, $telepon, $alamat) {
         $query = "UPDATE pemasok 
@@ -178,11 +147,7 @@
         return ambil($query);
     }
 
-    function tampilkan_pembeli($mulai, $halaman){
-        $query = "SELECT * FROM pembeli LIMIT $mulai, $halaman";
-        
-        return ambil($query);
-    }
+
 
     function tambah_pembeli($id_pembeli, $nama, $alamat, $jenis_kelamin) {
         $query = "INSERT INTO pembeli (id_pembeli, nama, alamat, jenis_kelamin)
@@ -192,11 +157,7 @@
         return ambil($query);
     }
 
-    function detail_pembeli($id) {
-        $query = "SELECT * FROM pembeli WHERE id_pembeli='$id'";
-        
-        return ambil($query);
-    }
+
 
     function update_pembeli($id, $nama, $jenis_kelamin, $alamat){
         $query = "UPDATE pembeli 
@@ -211,14 +172,6 @@
                         VALUES('$id_pembeli')" 
                         or die(mysqli_error());
 
-        return ambil($query);
-    }
-
-    function tampilkan_penjualan($mulai, $halaman){
-        $query = "SELECT * FROM penjualan 
-                    ORDER BY waktu DESC 
-                    LIMIT $mulai, $halaman ";
-        
         return ambil($query);
     }
 
@@ -254,11 +207,7 @@
         return ambil($query);
     }
 
-    function detail_penjualan($id) {
-        $query = "SELECT * FROM penjualan WHERE kode_transaksi='$id'";
-        
-        return ambil($query);
-    }
+
 
     function update_penjualan($id, $id_pembeli, $id_pegawai, $waktu, $kode_barang, $jumlah, $harga, $total_harga){
         $query = "UPDATE penjualan SET  id_pembeli='$id_pembeli', id_pegawai='$id_pegawai', waktu='$waktu', kode_barang='$kode_barang', jumlah='$jumlah', harga='$harga', total_harga='$total_harga'
@@ -282,12 +231,6 @@
     function ambil_nama_barang($kode_barang){
         $query = "SELECT nama_brg FROM barang WHERE kode_barang='$kode_barang'";
 
-        return ambil($query);
-    }
-
-    function tampilkan_suplai($mulai, $halaman){
-        $query = "SELECT * FROM suplai ORDER BY waktu DESC LIMIT $mulai, $halaman";
-        
         return ambil($query);
     }
 
@@ -315,11 +258,6 @@
         return ambil($query);
     }
 
-    function detail_suplai($id) {
-        $query = "SELECT * FROM suplai WHERE kode_suplai='$id'";
-        
-        return ambil($query);
-    }
 
     function update_suplai($id, $id_pemasok, $waktu, $kode_barang, $nama_barang, $jumlah, $harga, $total_harga) {
         $query = "UPDATE suplai SET id_pemasok='$id_pemasok', waktu='$waktu', kode_barang='$kode_barang', nama_barang='$nama_barang', jumlah='$jumlah', 
@@ -398,15 +336,8 @@
         $sisa = $data_sisa['sisa'];        
         $jumlah = $data_jumlah['jumlah'];
 
-        // echo $sisa;
-        // echo $jumlah;
-        // echo $jumlah_pasokan;
-
         $hasil_tambah_sisa = $sisa + $jumlah_pasokan;
         $hasil_tambah_jumlah = $jumlah + $jumlah_pasokan;
-
-        // echo $hasil_tambah_sisa;
-        // echo $hasil_tambah_jumlah;
 
         update_jumlah_barang($kode_barang, $hasil_tambah_jumlah);           
         update_sisa_barang($kode_barang, $hasil_tambah_sisa);
@@ -423,15 +354,8 @@
         $sisa = $data_sisa['sisa'];        
         $jumlah = $data_jumlah['jumlah'];
 
-        // echo $sisa;
-        // echo $jumlah;
-        // echo $jumlah_pasokan;
-
         $hasil_tambah_sisa = $sisa - $jumlah_kurang;
         $hasil_tambah_jumlah = $jumlah - $jumlah_kurang;
-
-        // echo $hasil_tambah_sisa;
-        // echo $hasil_tambah_jumlah;
 
         update_jumlah_barang($kode_barang, $hasil_tambah_jumlah);           
         update_sisa_barang($kode_barang, $hasil_tambah_sisa);

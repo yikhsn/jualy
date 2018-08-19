@@ -1,7 +1,6 @@
 <?
     require '../functions/act.php';
     require '../functions/db.php';
-    require '../functions/user.php';  
 
 ?>
 <div class="card-wrapper">
