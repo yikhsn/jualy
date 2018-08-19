@@ -1,25 +1,24 @@
 <?php
     require_once 'core/init.php';
 
-    if(!isset($_SESSION['username'])){
-        header('location: ../index.php');            
-    }
-
     if($_SESSION['username']!="admin"){
         header('location: ../index.php');                    
     }
 
     if(isset($_POST['submit'])){
-        $kode_suplai = $_POST['kode_suplai'];
-        $id_pemasok = $_POST['id_pemasok'];
-        $waktu = $_POST['waktu'];
-        $kode_barang = $_POST['kode_barang'];        
-        $nama_barang = $_POST['nama_barang'];
-        $jumlah = $_POST['jumlah'];
-        $harga = $_POST['harga'];
-        $total_harga = $_POST['total_harga'];
-        
-        tambah_suplai($kode_suplai, $id_pemasok, $waktu, $kode_barang, $nama_barang, $jumlah, $harga, $total_harga);
+
+        $fields = array(
+            'kode_suplai'   => $_POST['kode_suplai'],
+            'id_pemasok'    => $_POST['id_pemasok'],
+            'waktu'         => $_POST['waktu'],
+            'kode_barang'   => $_POST['kode_barang'],        
+            'nama_barang'   => $_POST['nama_barang'],
+            'jumlah'        => $_POST['jumlah'],
+            'harga'         => $_POST['harga'],
+            'total_harga'   => $_POST['total_harga']
+        );
+
+        insert('suplai', $fields);
         tambah_pasokan_barang($kode_barang, $jumlah);
         header('location:suplai.php');
     }

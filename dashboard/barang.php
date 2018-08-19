@@ -1,21 +1,24 @@
 <?php
     require_once 'core/init.php'; 
 
-    if(isset($_POST['submit'])){
-        $nama = $_POST['nama'];
-        $jenis = $_POST['jenis'];
-        $harga = $_POST['harga'];
-        $kode = $_POST['kode'];
-        $jumlah = $_POST['jumlah'];
-        $suplier = $_POST['suplier'];
-        $sisa = $jumlah;
-        
-        tambah_barang($nama, $jenis, $harga, $kode, $jumlah, $sisa, $suplier);
-        header('location:barang.php');
-    }
-
     if(!isset($_SESSION['username'])){
         header('location: ../index.php');
+    }
+    
+    if(isset($_POST['submit'])){
+        
+        $fields = array(
+            'nama_brg'      => $_POST['nama'],
+            'jenis_brg'     => $_POST['jenis'],
+            'harga_brg'     => $_POST['harga'],
+            'kode_barang'   => $_POST['kode'],
+            'jumlah'        => $_POST['jumlah'],
+            'suplier'       => $_POST['suplier'],
+            'sisa'          => $_POST['jumlah']
+        );
+        
+        insert('barang', $fields);
+        header('location:barang.php');
     }
 
     require_once 'view/header.php';     

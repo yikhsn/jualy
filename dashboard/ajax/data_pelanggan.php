@@ -1,14 +1,12 @@
 <?php
-require '../functions/act.php';
-require '../functions/db.php';
+    require '../functions/act.php';
+    require '../functions/db.php';
 ?>
 
     <label class="col-form-label" for="idPembeli">ID Pembeli</label>
     <select class="custom-select" name="id_pembeli" id="idPembeli">
         <?
-            $pelanggan = getAll($table, 'id_pembeli');
-
-            print_r($pelanggan);
+            $pelanggan = getAll('pembeli', 'id_pembeli');
 
             while($row = mysqli_fetch_array($pelanggan)) {
         ?>

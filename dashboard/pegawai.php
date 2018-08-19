@@ -1,23 +1,22 @@
 <?php
     require_once 'core/init.php';
 
-    if(!isset($_SESSION['username'])){
-        header('location: ../index.php');            
-    }
-
     if($_SESSION['username']!="admin"){
         header('location: ../index.php');                    
     }    
 
     if(isset($_POST['submit'])){
-        $id_pegawai = $_POST['id_pegawai'];
-        $nama_pegawai = $_POST['nama_pegawai'];
-        $shift = $_POST['shift'];
-        $jenis_kelamin = $_POST['jenis_kelamin'];
-        $alamat = $_POST['alamat'];
-        $no_hape = $_POST['no_hape'];
         
-        tambah_pegawai($id_pegawai, $nama_pegawai, $shift, $jenis_kelamin, $alamat, $no_hape);
+        $fields = array(
+            'id_pegawai'    => $_POST['id_pegawai'],
+            'nama_pegawai'  => $_POST['nama_pegawai'],
+            'shift'         => $_POST['shift'],
+            'jenis_kelamin' => $_POST['jenis_kelamin'],
+            'alamat'        => $_POST['alamat'],
+            'no_hape'       => $_POST['no_hape']    
+        );
+
+        insert('pegawai', $fields);
         header('location:pegawai.php');
     }
 

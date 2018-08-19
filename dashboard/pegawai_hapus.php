@@ -1,9 +1,6 @@
-<?php require_once 'core/init.php' ?>
+<?php 
+    require_once 'core/init.php';
 
-<?
-    if(!isset($_SESSION['username'])){
-        header('location: ../index.php');            
-    }
 
     if($_SESSION['username']!="admin"){
         header('location: ../index.php');                    

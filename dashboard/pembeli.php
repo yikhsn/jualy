@@ -6,12 +6,15 @@
     }
 
     if(isset($_POST['submit'])){
-        $id_pembeli = $_POST['id_pembeli'];        
-        $nama = $_POST['nama'];
-        $alamat = $_POST['alamat'];
-        $jenis_kelamin = $_POST['jenis_kelamin'];
-        
-        tambah_pembeli($id_pembeli, $nama, $alamat, $jenis_kelamin);
+
+        $fields = array(
+            'id_pembeli'    => $_POST['id_pembeli'],   
+            'nama'          => $_POST['nama'],
+            'alamat'        => $_POST['alamat'],
+            'jenis_kelamin' => $_POST['jenis_kelamin']  
+        );
+
+        insert('pembeli', $fields);
         header('location:pembeli.php');
     }
 

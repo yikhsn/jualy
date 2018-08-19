@@ -8,16 +8,19 @@
     $username = $_SESSION['username'];
 
     if(isset($_POST['submit'])){
-        $kode_transaksi = $_POST['kode_transaksi'];
-        $id_pembeli = $_POST['id_pembeli'];
-        $id_pegawai = $username;
-        $waktu = $_POST['waktu'];
-        $kode_barang = $_POST['kode_barang'];
-        $jumlah = $_POST['jumlah'];
-        $harga = $_POST['harga'];
-        $total_harga = $_POST['total_harga'];
-        
-        tambah_penjualan($kode_transaksi, $id_pembeli, $id_pegawai, $waktu, $kode_barang, $jumlah, $harga, $total_harga);
+
+        $fields = array(
+            'kode_transaksi'    => $_POST['kode_transaksi'],
+            'id_pembeli'        => $_POST['id_pembeli'],
+            'id_pegawai'        => $username,
+            'waktu'             => $_POST['waktu'],
+            'kode_barang'       => $_POST['kode_barang'],
+            'jumlah'            => $_POST['jumlah'],
+            'harga'             => $_POST['harga'],
+            'total_harga'       => $_POST['total_harga']
+        );
+
+        insert('penjualan', $fields);
         kurang_barang($kode_barang, $jumlah);
         header('location: cetak/struk.php');
     }

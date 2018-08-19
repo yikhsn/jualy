@@ -1,22 +1,21 @@
 <?php
     require_once 'core/init.php';
 
-    if(!isset($_SESSION['username'])){
-        header('location: ../index.php');            
-    }
-
     if($_SESSION['username']!="admin"){
         header('location: ../index.php');                    
     }  
 
     if(isset($_POST['submit'])){
-        $id_pemasok = $_POST['id_pemasok'];        
-        $nama_pemasok = $_POST['nama_pemasok'];
-        $alamat = $_POST['alamat'];
-        $barang = $_POST['barang'];
-        $telepon = $_POST['telepon'];        
-        
-        tambah_pemasok($id_pemasok, $nama_pemasok, $alamat, $barang, $telepon);
+
+        $fields = array(
+            'id_pemasok'    => $_POST['id_pemasok'],  
+            'nama_pemasok'  => $_POST['nama_pemasok'],
+            'alamat'        => $_POST['alamat'],
+            'barang'        => $_POST['barang'],
+            'telepon'       => $_POST['telepon']            
+        );
+
+        insert('pemasok', $fields);
         header('location:pemasok.php');
     }
 
@@ -165,7 +164,7 @@
                     <div class="form-group">
                         <label class="col-form-label" for="idPemasok">ID Pemasok</label>
                         <input class="form-control" value="<?= $next_id; ?>" readonly name="id_pemasok" type="text" id="idPemasok">
-                    </div
+                    </div>
                     <div class="form-group">
                         <label class="col-form-label" for="namaPemasok">Nama Pemasok</label>
                         <input class="form-control" name="nama_pemasok" type="text" id="namaPemasok">

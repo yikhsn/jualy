@@ -1,6 +1,10 @@
 <?php 
     require_once 'core/init.php';
 
+    if($_SESSION['username']!="admin"){
+        header('location: ../index.php');                    
+    }
+
     $id = $_GET['id'];    
 
     if(isset($_POST['update_pemasok'])){
@@ -14,14 +18,6 @@
 
         update('pemasok', $fields, 'id_pemasok', $id);
         header('Location: pemasok.php');
-    }
-
-    if(!isset($_SESSION['username'])){
-        header('location: ../index.php');            
-    }
-
-    if($_SESSION['username']!="admin"){
-        header('location: ../index.php');                    
     }
 
     require_once 'view/header.php';    
